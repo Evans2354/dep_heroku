@@ -1,4 +1,4 @@
-from .app import db
+from app import db
 
 
 class Pet(db.Model):
@@ -11,3 +11,4 @@ class Pet(db.Model):
 
     def __repr__(self):
         return '<Pet %r>' % (self.name)
+        print(name)

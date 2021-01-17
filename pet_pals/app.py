@@ -6,6 +6,7 @@ from flask import (
     jsonify,
     request,
     redirect)
+from flask_sqlalchemy import SQLAlchemy
 
 #################################################
 # Flask Setup
@@ -16,15 +17,25 @@ app = Flask(__name__)
 # Database Setup
 #################################################
 
-from flask_sqlalchemy import SQLAlchemy
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '') or "sqlite:///db.sqlite"
+DATABASE_URL ='postgresql://postgres:postgres@localhost/postgres'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@localhost/postgres' #os.environ.get('DATABASE_URL', '') #or "sqlite:///db.sqlite"
 
 # Remove tracking modifications
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
-from .models import Pet
+class Pet(db.Model):
+    __tablename__ = 'pets'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64))
+    lat = db.Column(db.Float)
+    lon = db.Column(db.Float)
+
+    def __repr__(self):
+        return '<Pet %r>' % self.username
+        
 
 
 # create route that renders index.html template
@@ -41,8 +52,8 @@ def send():
         lat = request.form["petLat"]
         lon = request.form["petLon"]
 
-        pet = Pet(name=name, lat=lat, lon=lon)
-        db.session.add(pet)
+        pets = Pet(name=name, lat=lat, lon=lon)
+        db.session.add(pets)
         db.session.commit()
         return redirect("/", code=302)
 
@@ -51,6 +62,7 @@ def send():
 
 @app.route("/api/pals")
 def pals():
+    #import pets
     results = db.session.query(Pet.name, Pet.lat, Pet.lon).all()
 
     hover_text = [result[0] for result in results]

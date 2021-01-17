@@ -17,7 +17,7 @@ app = Flask(__name__)
 # Database Setup
 #################################################
 
-#DATABASE_URL ='postgresql://postgres:postgres@localhost/postgres'
+URI ='postgres://xubfwzwktbwnuv:8a82107d7ef022b5d4732ae8b26a224d5ac0e99228c8f693086a3cb47858674d@ec2-52-205-61-60.compute-1.amazonaws.com:5432/ddpcgd16dbpram'
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('URI')#'postgresql://postgres:postgres@localhost/postgres' # #or "sqlite:///db.sqlite"
 
 # Remove tracking modifications

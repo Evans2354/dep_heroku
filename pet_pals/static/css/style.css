@@ -466,7 +466,7 @@ ul.social_top_icon li a:hover {
 }
 
 .banner_main {
-    background: url(../images/banner.jpg.);
+    background: url(../static/images/banner.jpg.);
     background-size: 100% 100%;
     background-repeat: no-repeat;
 }
